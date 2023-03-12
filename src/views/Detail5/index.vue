@@ -1,0 +1,158 @@
+<template>
+  <div>
+    <Header />
+    <div class="bigboder" :class="{ bigboder2: !big }">
+      <div class="middle" :class="{ middle2: !big }">
+        <h3>
+          新闻动态 &nbsp;&nbsp;|&nbsp;&nbsp; 美国驻华大使馆经济处、新闻文化处外交官一行到访中国友好和平发展基金会
+        </h3>
+        <div class="top">
+          <span>作者:全球发明大会中国区</span>
+          <span class="time">发布时间: 2023-02-22</span>
+          <span>48 次浏览</span>
+        </div>
+        <div class="text">
+          <img src="./image/1.jpg" alt="" />
+          <span>2月15日，在全国对外友协林松添会长出访美国之际，美国驻华大使馆经济处一等秘书泰勒·帕特里奇（Tyler Partridge）一行到访中国友好和平发展基金会，与王龙社秘书长就全球发明大会中国区竞赛活动的发展与合作及中美间人文交流进行了广泛沟通和深入探讨。</span>
+          <img src="./image/2.jpg" alt="" />
+          <span>王龙社秘书长对美驻华大使馆外交官一行来访表示欢迎，并对基金会基本情况、全球发明大会中国区竞赛活动的发展历程及今年筹办工作做了简要介绍。他表示，中国疫情防控已进入新阶段，线下国际交流合作正在有序恢复，中美民间交流合作迎来了新的发展机遇。基金会希以全球发明大会中国区竞赛活动为纽带，与美驻华大使馆加强联系，利用双方优质资源，将活动越办越好，搭建包括中美在内的世界各国青少年科技创新交流平台；充分调动民间团体、企业、友好人士参与民间交往的积极性，促进人文交流和民间往来，为中美两国关系健康稳定发展筑牢民意基础，为构建人类命运共同体贡献力量。</span>
+          <span>泰勒·帕特里奇高度赞赏基金会在民间外交、美中青少年科技创新交流和公益慈善等方面所做的工作。他说，美中青少年科创交流是美中人文交流的重要组成部分。美驻华大使馆及领事馆愿以全球发明大会合作为契合点，链接更多美在华企业、美在华机构及媒体资源，有机融合科技与民间外交元素，为此活动开展提供大力支持和积极协调，鼓励美中两国青少年运用科学、技术和创新的方法来应对当今世界面临的巨大挑战，推动美中友好交流，为两国关系发展增添正能量。</span>
+          <span>美驻华大使馆新闻文化处公共关系专员卡罗琳·柳（Carolina Yoo）、基金会项目管理部主任邵帅、全球发明大会中国区召集人王维廉参加座谈交流</span>
+          <span>全球发明大会中国区(Invention Convention China)，简称ICC，是由中国友好和平发展基金会主办的一项面向青少年儿童的发明类竞赛活动。</span>
+            <span>竞赛旨在引导学生开展科技创新、发明创造、社会实践等创新性活动，在真正的创新实践中培养创新型人才，推动素质教育发展，践行创新驱动发展战略，鼓励和激发更多青少年关注社会问题、承担社会责任，通过创意与实践提升服务社会的意识和能力。</span>
+          </div>
+      </div>
+      <div :class="{'sfoot':big,'smallFoot':!big}">
+      <span @click="up">上一篇：新闻动态 | 桐乡市科协主席沈玉林一行调研全球发明大会中国区</span>
+      <span @click="down">下一篇：信息发布｜2022-2023年度全球发明大会中国区协调单位名单（第四批）</span>
+    </div>
+    </div>
+    <Footer />
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      big: true,
+    };
+  },
+  mounted() {
+    window.scrollTo(0,0)
+    let w = window.screen.width;
+    if (w < 800) {
+      this.big = false;
+    }
+  },
+  methods: {
+    up(){
+      this.$router.push({name:'Detail4'})
+    },
+    down(){
+      this.$router.push({name:'Detail6'})
+    }
+  },
+};
+</script>
+
+<style lang="less" scoped>
+span,div,h1,h2,h3{
+  cursor: pointer;
+}
+.bigboder2 {
+  margin-top: 0 !important;
+}
+.bigboder {
+  margin-top: 15vh;
+  height: 120vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  .middle2 {
+    width: 100vw !important;
+  }
+  .middle {
+    height: 100%;
+    width: 50%;
+    overflow: scroll;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2vw 5vw;
+    box-sizing: border-box;
+    .top {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 1vh;
+      padding-bottom: 1vh;
+      border-bottom: 1vh solid #d9d9d9;
+      font-size: 0.3vw;
+      padding: 2vw 0;
+      .time {
+        margin: 0 3vh;
+      }
+    }
+    h3 {
+      font-size: 1.5vw;
+      color: #4f6eaa;
+      text-align: center;
+    }
+    .text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: SimSun;
+      span {
+        font-size: 1vw;
+        line-height: 4vh;
+        margin: 2vh 0;
+        strong {
+          color: #07b9f1;
+        }
+      }
+    }
+    img {
+      width: 100%;
+    }
+  }
+}
+.sfoot{
+  height: 20vh;
+  display: flex;
+  height: 20vh;
+  width: 50vw;
+  margin-left: 25vw;
+  background-color: #fff;
+  flex-direction: column;
+  width: 40vw;
+  font-size: 1vw;
+  text-align: left;
+  margin-top: 5vh;
+  font-family: SimSun;
+    font-size: 12px;
+    color: #444!important;
+    font-weight: normal;
+    line-height: 25px;
+  span:hover{
+    color:skyblue;
+
+  }
+}
+.smallFoot{
+  width: 50vw;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  margin: 5vh 0;
+  span{
+    width: 100%;
+    padding: 1vh 0;
+        overflow: hidden; // 文字超长隐藏
+    text-overflow:ellipsis; // 显示...
+    white-space: nowrap; // 单行显示
+  }
+}
+</style>
