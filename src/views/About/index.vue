@@ -1,5 +1,23 @@
 <template>
-  <div>
+  <div class=bigbox>
+    <div v-if="top" :class="{ runTop: testShow }" @click="toTop">
+      <svg
+        t="1678766219182"
+        class="icon"
+        viewBox="0 0 1024 1024"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        p-id="3026"
+        width="18"
+        height="18"
+      >
+        <path
+          d="M512 378.24l-418.88 418.88L0 704l512-512 512 512-93.12 93.12z"
+          fill="#fff"
+          p-id="3027"
+        ></path>
+      </svg>
+    </div>
     <Header blue="About"></Header>
     <div class="body" v-if="big">
       <div class="left"></div>
@@ -175,6 +193,8 @@ export default {
       testShow1: false,
       testShow2: false,
       big: true,
+      top:false,
+      y:0
     };
   },
   mounted() {
@@ -188,6 +208,7 @@ export default {
   methods: {
     handleScrollbox() {
       this.currentScroll = window.pageYOffset; //表示当前滚动的位置
+      this.y = window.pageYOffset;
 
       if (this.currentScroll >= this.$refs.testref.offsetTop - 600) {
         //当前滚动位置到达testref的时候，显示div（100作为调整用）
@@ -200,10 +221,23 @@ export default {
         this.testShow2 = true;
       }
     },
+     toTop(){
+      window.scrollTo(0, 0);
+    }
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.handleScrollbox, true);
   },
+  watch:{
+    y(){
+      //console.log(this.y);
+      if(this.y > 150){
+        this.top  = true
+      }else{
+        this.top = false
+      }
+    }
+  }
 };
 </script>
 
@@ -215,7 +249,28 @@ export default {
 span,div,h1,h2,h3{
   cursor: pointer;
 }
+.bigbox{
+  overflow-x:hidden;
+  .runTop{
+    position: fixed;
+    right: 10px;
+    bottom: 20vh;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #1d1d1d;
+    z-index: 1000;
+    text-align: center;
+      margin: 0 auto;
+      color: #fff;
+    
+    .icon{
+      margin-top: 5px;
+    }
+  }
+}
 .body {
+  overflow-x:hidden;
   width: 100%;
   height: 90vh;
   margin-top: 15vh;

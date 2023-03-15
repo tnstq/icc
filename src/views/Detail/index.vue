@@ -1,8 +1,26 @@
 <template>
-  <div>
+<!-- 竞赛内容 -->
+  <div class="bigbox">
+    <div v-if="top" :class="{ runTop: top }" @click="toTop">
+      <svg
+        t="1678766219182"
+        class="icon"
+        viewBox="0 0 1024 1024"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        p-id="3026"
+        width="18"
+        height="18"
+      >
+        <path
+          d="M512 378.24l-418.88 418.88L0 704l512-512 512 512-93.12 93.12z"
+          fill="#fff"
+          p-id="3027"
+        ></path>
+      </svg>
+    </div>
     <Header />
     <div :class="{ body: big, smallBody: !big }">
-
       <h1>2022-2023年度全球发明大会中国区竞赛活动规则</h1>
       <div class="top" :class="{ top2: !big }">
         <span>作者:全球发明大会中国区</span>
@@ -24,10 +42,12 @@
         <img src="./image/11.png" alt="" />
         <img src="./image/12.png" alt="" />
       </div>
-      <div :class="{'sfoot':big,'smallFoot':!big}">
-      <span @click="up">上一篇：无</span>
-      <span @click="down">下一篇：公益培训    |    直通ICC竞赛内容，引领科创公益新潮流</span>
-    </div>
+      <div :class="{ sfoot: big, smallFoot: !big }">
+        <span @click="up">上一篇：无</span>
+        <span @click="down"
+          >下一篇：公益培训 | 直通ICC竞赛内容，引领科创公益新潮流</span
+        >
+      </div>
     </div>
 
     <Footer />
@@ -39,10 +59,13 @@ export default {
   data() {
     return {
       big: true,
+      top:false,
+      y:0
     };
   },
   mounted() {
-    window.scrollTo(0,0)
+    window.addEventListener("scroll", this.handleScrollbox, true);
+    window.scrollTo(0, 0);
     let w = window.screen.width;
     if (w < 800) {
       this.big = false;
@@ -53,12 +76,28 @@ export default {
     down() {
       this.$router.push({ name: "Detail2" });
     },
-    back(){
-      this.$router.push({name:'News'})
+    back() {
+      this.$router.push({ name: "News" });
+    },
+    handleScrollbox() {
+      this.currentScroll = window.pageYOffset; //表示当前滚动的位置
+      this.y = window.pageYOffset;
+    },
+    toTop(){
+      window.scrollTo(0, 0);
     }
   },
+   watch:{
+    y(){
+      //console.log(this.y);
+      if(this.y > 150){
+        this.top  = true
+      }else{
+        this.top = false
+      }
+    }
+  }
 };
-
 </script>
 
 <style lang="less" scoped>
@@ -66,8 +105,35 @@ export default {
   margin: 0;
   padding: 0;
 }
-span,div,h1,h2,h3{
+span,
+div,
+h1,
+h2,
+h3 {
   cursor: pointer;
+}
+.bigbox {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  height: auto;
+  .runTop{
+    position: fixed;
+    right: 10px;
+    bottom: 20vh;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #1d1d1d;
+    z-index: 1000;
+    text-align: center;
+      margin: 0 auto;
+      color: #fff;
+    
+    .icon{
+      margin-top: 5px;
+    }
+  }
 }
 .body {
   h1 {
@@ -111,19 +177,19 @@ span,div,h1,h2,h3{
   }
   .top {
     display: flex;
-      justify-content: center;
-      width: 100%;
-      margin-bottom: 1vh;
-      padding-bottom: 1vh;
-      border-bottom: 1vh solid #d9d9d9;
-      padding: 2vw 0;
-      span{
-        display: inline-block;
-        font-size: 0.5vw;
-      }
-      .time {
-        margin: 0 3vh;
-      }
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 1vh;
+    padding-bottom: 1vh;
+    border-bottom: 1vh solid #d9d9d9;
+    padding: 2vw 0;
+    span {
+      display: inline-block;
+      font-size: 0.5vw;
+    }
+    .time {
+      margin: 0 3vh;
+    }
   }
   display: flex;
   flex-direction: column;
@@ -146,16 +212,16 @@ span,div,h1,h2,h3{
   flex-direction: column;
   margin-left: -30%;
   margin-top: 2vw;
-      font-family: SimSun;
-    font-size: 12px;
-    color: #444!important;
-    font-weight: normal;
-    line-height: 25px;
+  font-family: SimSun;
+  font-size: 12px;
+  color: #444 !important;
+  font-weight: normal;
+  line-height: 25px;
   span:hover {
     color: skyblue;
   }
 }
-.smallFoot{
+.smallFoot {
   width: 100vw;
   font-size: 12px;
   display: flex;
@@ -163,19 +229,19 @@ span,div,h1,h2,h3{
   margin-top: 5vh;
   text-align: left;
   margin-bottom: -5vh;
-  span{
+  span {
     width: 100%;
     padding: 1vh 0;
-        overflow: hidden; // 文字超长隐藏
-    text-overflow:ellipsis; // 显示...
+    overflow: hidden; // 文字超长隐藏
+    text-overflow: ellipsis; // 显示...
     white-space: nowrap; // 单行显示
   }
 }
-.back{
+.back {
   padding: 10px;
-  font: 15px Arial,"宋体",Helvetica, sans-serif,Verdana;
+  font: 15px Arial, "宋体", Helvetica, sans-serif, Verdana;
 }
-.back:hover{
+.back:hover {
   color: skyblue;
 }
 </style>

@@ -1,5 +1,23 @@
 <template>
-  <div>
+  <div class=bigbox>
+    <div v-if="top" :class="{ runTop: top }" @click="toTop">
+      <svg
+        t="1678766219182"
+        class="icon"
+        viewBox="0 0 1024 1024"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        p-id="3026"
+        width="18"
+        height="18"
+      >
+        <path
+          d="M512 378.24l-418.88 418.88L0 704l512-512 512 512-93.12 93.12z"
+          fill="#fff"
+          p-id="3027"
+        ></path>
+      </svg>
+    </div>
     <Header />
     <div class="bigboder" :class="{ bigboder2: !big }">
       <div class="middle" :class="{ middle2: !big }">
@@ -12,6 +30,7 @@
           <span>48 次浏览</span>
         </div>
         <div class="text">
+          <div class="back" @click="back">< &nbsp;返回</div>
           <img src="./image/1.jpg" alt="" />
           <span>2月15日，在全国对外友协林松添会长出访美国之际，美国驻华大使馆经济处一等秘书泰勒·帕特里奇（Tyler Partridge）一行到访中国友好和平发展基金会，与王龙社秘书长就全球发明大会中国区竞赛活动的发展与合作及中美间人文交流进行了广泛沟通和深入探讨。</span>
           <img src="./image/2.jpg" alt="" />
@@ -36,9 +55,12 @@ export default {
   data() {
     return {
       big: true,
+      top:false,
+      y:0
     };
   },
   mounted() {
+    window.addEventListener("scroll", this.handleScrollbox, true);
     window.scrollTo(0,0)
     let w = window.screen.width;
     if (w < 800) {
@@ -51,14 +73,57 @@ export default {
     },
     down(){
       this.$router.push({name:'Detail6'})
+    },
+    back(){
+      this.$router.push({name:'News'})
+    },
+    handleScrollbox() {
+      this.currentScroll = window.pageYOffset; //表示当前滚动的位置
+      this.y = window.pageYOffset;
+    },
+    toTop(){
+      window.scrollTo(0, 0);
     }
   },
+  watch:{
+    y(){
+      //console.log(this.y);
+      if(this.y > 150){
+        this.top  = true
+      }else{
+        this.top = false
+      }
+    }
+  }
 };
 </script>
 
 <style lang="less" scoped>
 span,div,h1,h2,h3{
   cursor: pointer;
+}
+.bigbox {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  height: auto;
+  .runTop{
+    position: fixed;
+    right: 10px;
+    bottom: 20vh;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #1d1d1d;
+    z-index: 1000;
+    text-align: center;
+      margin: 0 auto;
+      color: #fff;
+    
+    .icon{
+      margin-top: 5px;
+    }
+  }
 }
 .bigboder2 {
   margin-top: 0 !important;
@@ -154,5 +219,13 @@ span,div,h1,h2,h3{
     text-overflow:ellipsis; // 显示...
     white-space: nowrap; // 单行显示
   }
+}
+.back{
+  margin-left: -90%;
+  padding: 10px;
+  font: 15px Arial,"宋体",Helvetica, sans-serif,Verdana;
+}
+.back:hover{
+  color: skyblue;
 }
 </style>

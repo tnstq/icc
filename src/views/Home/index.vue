@@ -1,7 +1,26 @@
 <template>
+<!-- 首页 -->
   <div class="bigbox">
-    <Header blue="Home" />
-    <div :class="{ 'banner': big, 'bannerSmall': !big }">
+    <Header blue="Home" id = 'head'/>
+    <div v-if="top" :class="{ runTop: testShow }" @click="toTop">
+      <svg
+        t="1678766219182"
+        class="icon"
+        viewBox="0 0 1024 1024"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        p-id="3026"
+        width="18"
+        height="18"
+      >
+        <path
+          d="M512 378.24l-418.88 418.88L0 704l512-512 512 512-93.12 93.12z"
+          fill="#fff"
+          p-id="3027"
+        ></path>
+      </svg>
+    </div>
+    <div :class="{ banner: big, bannerSmall: !big }">
       <div class="swiper-container">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
@@ -20,11 +39,12 @@
         <!-- 如果需要分页器 -->
         <div class="swiper-pagination"></div>
       </div>
-      
     </div>
-    <div :class="{ 'foot': big, 'footSmall': !big }">网站持续更新升级中，敬请期待更多精彩内容！</div>
-    <div :class="{ 'leg': big, 'smallLeg': !big }">
-      <div class="right" >
+    <div :class="{ foot: big, footSmall: !big }">
+      网站持续更新升级中，敬请期待更多精彩内容！
+    </div>
+    <div :class="{ leg: big, smallLeg: !big }">
+      <div class="right">
         <h1>全球发明大赛中国区</h1>
         <div>——</div>
         <span>让我们的孩子拥有博大的视野和有责任的心</span>
@@ -45,6 +65,7 @@
               src="./image/2.jpg"
               alt=""
               :class="{ img: testShow }"
+              @click="toNews"
             />
           </li>
           <li class="text">支持我们</li>
@@ -54,6 +75,7 @@
               src="./image/1.jpg"
               alt=""
               :class="{ img2: testShow }"
+              @click="toAbout"
             />
           </li>
           <li class="text">近期赛事</li>
@@ -63,6 +85,7 @@
               src="./image/3.jpg"
               alt=""
               :class="{ img2: testShow }"
+              @click="toCall"
             />
           </li>
         </ul>
@@ -75,21 +98,26 @@
               src="./image/2.jpg"
               alt=""
               :class="{ img: testShow }"
-            /> <span>关于我们</span>
-            </li>
+            />
+            <span>关于我们</span>
+          </li>
 
-          <li class="text"><img
+          <li class="text">
+            <img
               ref="testref"
               src="./image/1.jpg"
               alt=""
               :class="{ img2: testShow }"
-            /><span>支持我们</span></li>
-          <li class="text"><img
+            /><span>支持我们</span>
+          </li>
+          <li class="text">
+            <img
               ref="testref"
               src="./image/3.jpg"
               alt=""
               :class="{ img2: testShow }"
-            /><span>近期赛事</span></li>
+            /><span>近期赛事</span>
+          </li>
         </ul>
       </div>
     </div>
@@ -102,8 +130,10 @@ export default {
   name: "Home",
   data() {
     return {
-      testShow: false,
-      big: true,
+      testShow: false,//动画
+      big: true,//移动适配
+      top:false,//返回顶部
+      y:0
     };
   },
   mounted() {
@@ -114,9 +144,8 @@ export default {
         el: ".swiper-pagination",
         clickable: true, //设置小原店面可以切换
       },
-
+      effect: "fade",
       // 如果需要滚动条
-      spaceBetween: 50,
       autoplay: true,
     });
     window.addEventListener("scroll", this.handleScrollbox, true);
@@ -127,18 +156,42 @@ export default {
     }
   },
   methods: {
+    //动画
     handleScrollbox() {
       this.currentScroll = window.pageYOffset; //表示当前滚动的位置
+      this.y = window.pageYOffset;
 
       if (this.currentScroll >= this.$refs.testref.offsetTop - 10000) {
         //当前滚动位置到达testref的时候，显示div（100作为调整用）
         this.testShow = true;
       }
     },
+    toNews() {
+      this.$router.push({ name: "News" });
+    },
+    toAbout() {
+      this.$router.push({ name: "About" });
+    },
+    toCall() {
+      this.$router.push({ name: "Call" });
+    },
+    toTop(){
+      window.scrollTo(0, 0);
+    }
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.handleScrollbox, true);
   },
+  watch:{
+    y(){
+      //console.log(this.y);
+      if(this.y > 150){
+        this.top  = true
+      }else{
+        this.top = false
+      }
+    }
+  }
 };
 </script>
 
@@ -148,14 +201,41 @@ export default {
   padding: 0;
   list-style: none;
 }
-span,div,h1,h2,h3{
+span,
+div,
+h1,
+h2,
+h3 {
   cursor: pointer;
 }
-.bigbox{
+.bigbox {
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+  height: auto;
+  .runTop{
+    position: fixed;
+    right: 10px;
+    bottom: 20vh;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #1d1d1d;
+    z-index: 1000;
+    text-align: center;
+      margin: 0 auto;
+      color: #fff;
+    
+    .icon{
+      margin-top: 5px;
+    }
+  }
+}
+body {
+  margin: none !important;
 }
 .banner {
+  width: 100%;
   height: 95vh;
   position: relative;
   .swiper-container ::v-deep .swiper-pagination {
@@ -183,7 +263,7 @@ span,div,h1,h2,h3{
         height: 100%;
         position: relative;
         img {
-          width: 100vw;
+          width: 100%;
           position: absolute;
           left: 0;
           top: 0;
@@ -191,10 +271,10 @@ span,div,h1,h2,h3{
       }
     }
   }
- 
 }
-.bannerSmall{
-  width: 100vw;
+.bannerSmall {
+  overflow-x: hidden;
+  width: 100%;
   height: 38.5vw;
   position: relative;
   .swiper-container ::v-deep .swiper-pagination {
@@ -222,7 +302,7 @@ span,div,h1,h2,h3{
         height: 100%;
         position: relative;
         img {
-          width: 100vw;
+          width: 100%;
           position: absolute;
           left: 0;
           top: 0;
@@ -230,39 +310,39 @@ span,div,h1,h2,h3{
       }
     }
   }
-  
 }
- .foot {
-    width: 100vw;
-    background-color: rgb(204, 204, 204);
-    tab-size: 20px;
-    height: 20vh;
-    font-size: 20px;
-    text-align: center;
-    line-height: 20vh;
-    font-weight: bold;
-    z-index: 998;
-    font-family: SimSun;
-    box-sizing: border-box;
-    margin-top: -15vh;
-  }
-  .footSmall{
-    width: 100vw;
-    background-color: rgb(204, 204, 204);
-    tab-size: 20px;
-    height: 20vh;
-    font-size: 15px;
-    text-align: center;
-    line-height: 20vh;
-    font-weight: bold;
-    z-index: 998;
-    font-family: SimSun;
-    box-sizing: border-box;
-  }
+.foot {
+  width: 100%;
+  background-color: rgb(204, 204, 204);
+  tab-size: 20px;
+  height: 20vh;
+  font-size: 20px;
+  text-align: center;
+  line-height: 10vw;
+  font-weight: bold;
+  z-index: 998;
+  font-family: SimSun;
+  box-sizing: border-box;
+  margin-top: -15vh;
+}
+.footSmall {
+  overflow-x: hidden;
+  width: 100%;
+  background-color: rgb(204, 204, 204);
+  tab-size: 20px;
+  height: 10vh;
+  font-size: 15px;
+  text-align: center;
+  line-height: 10vh;
+  font-weight: bold;
+  z-index: 998;
+  font-family: SimSun;
+  box-sizing: border-box;
+}
 .leg {
   width: 100%;
   background-color: #efefef;
-  height: 80vh;
+  height: 70vh;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -348,45 +428,46 @@ span,div,h1,h2,h3{
     }
   }
 }
-.smallLeg{
-  width: 100vw;
+.smallLeg {
+  overflow-x: hidden;
+  width: 100%;
   background-color: #efefef;
   text-align: center;
   height: 100vh;
-  .right{
+  .right {
     margin-bottom: 5vw;
-     display: flex;
-  flex-direction: column;
-  padding: 0 20px;
-  height: 70%;
-    h1{
-    font-size: 25px;
-    font-weight: normal;
-    line-height: 80px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    height: 70%;
+    h1 {
+      font-size: 25px;
+      font-weight: normal;
+      line-height: 80px;
+    }
+    div {
+      margin: 3vh 0;
+    }
+    span {
+      line-height: 40px;
+    }
   }
-  div{
-    margin: 3vh 0;
-  }
-  span{
-    line-height: 40px;
-  }
-  }
-  .left1{
+  .left1 {
     flex: 1;
     padding-bottom: 20px;
-    ul{
+    ul {
       display: flex;
-    justify-content: space-between;
-      .text{
-      display: flex;
-      flex-direction: column;
-      font-size: 5vw;
-      font-weight: 700;
-      img{
-        width: 30vw;
-        margin-bottom: 3vw;
+      justify-content: space-between;
+      .text {
+        display: flex;
+        flex-direction: column;
+        font-size: 5vw;
+        font-weight: 700;
+        img {
+          width: 30vw;
+          margin-bottom: 3vw;
+        }
       }
-    }
     }
   }
 }

@@ -1,6 +1,7 @@
 import Home from '@/views/Home'
 import About from '@/views/About'
 import Rules from '@/views/Rules'
+import Rules1 from '@/views/Rules1'
 import News from '@/views/News'
 import Call from '@/views/Call'
 import NewsDetail from '@/views/Detail'
@@ -13,6 +14,7 @@ import NewsDetail7 from '@/views/Detail7'
 import NewsDetail8 from '@/views/Detail8'
 import NewsDetail9 from '@/views/Detail9'
 import NewsDetail10 from '@/views/Detail10'
+import Means from '@/views/Means'
 export default [
     {
         path:'/home',
@@ -28,6 +30,11 @@ export default [
         path:'/rules',
         component:Rules,
         name:'Rules'
+    },
+    {
+        path:'/rules1',
+        component:Rules1,
+        name:'Rules1'
     },
     {
         path:'/news',
@@ -88,6 +95,11 @@ export default [
         path:'/newsdetail10',
         component:NewsDetail10,
         name:'Detail10'
+    },
+    {
+        path:'/means',
+        component:Means,
+        name:'Means'
     },
     {
         path:'*',

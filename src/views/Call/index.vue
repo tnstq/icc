@@ -1,5 +1,23 @@
 <template>
-  <div>
+  <div class=bigbox>
+    <div v-if="top" :class="{ runTop: top }" @click="toTop">
+      <svg
+        t="1678766219182"
+        class="icon"
+        viewBox="0 0 1024 1024"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        p-id="3026"
+        width="18"
+        height="18"
+      >
+        <path
+          d="M512 378.24l-418.88 418.88L0 704l512-512 512 512-93.12 93.12z"
+          fill="#fff"
+          p-id="3027"
+        ></path>
+      </svg>
+    </div>
     <Header blue="Call"/>
     <div class="body" :class="{ body: big, smallbody: !big }">
       <div class="top">
@@ -16,7 +34,7 @@
       </div>
       <div class="bottom">
         <img src="./image/emil.png" alt="" /><span
-          >邮箱：contact@inventionconvention.cn</span
+          >邮箱：contact@icc.ah.cn</span
         >
       </div>
     </div>
@@ -30,20 +48,65 @@ export default {
   data() {
     return {
       big:true,
+      top:false,
+      y:0
     }
   },
   mounted() {
     window.scrollTo(0,0)
+    window.addEventListener("scroll", this.handleScrollbox, true);
     let w = window.screen.width;
     if (w < 800) {
       this.big = false;
     }
   },
+  methods: {
+    handleScrollbox() {
+      this.currentScroll = window.pageYOffset; //表示当前滚动的位置
+      this.y = window.pageYOffset;
+    },
+    toTop(){
+      window.scrollTo(0, 0);
+    }
+  },
+  watch:{
+    y(){
+      //console.log(this.y);
+      if(this.y > 150){
+        this.top  = true
+      }else{
+        this.top = false
+      }
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
 span,div,h1,h2,h3{
   cursor: pointer;
+}
+.bigbox{
+  display: flex;
+  flex-direction: column;
+  overflow-x:hidden;
+  height: auto;
+  .runTop{
+    position: fixed;
+    right: 10px;
+    bottom: 20vh;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #1d1d1d;
+    z-index: 1000;
+    text-align: center;
+      margin: 0 auto;
+      color: #fff;
+    
+    .icon{
+      margin-top: 5px;
+    }
+  }
 }
 .body {
   .top {

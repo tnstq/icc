@@ -1,13 +1,13 @@
 <template>
   <div>
     <div :class="{ footer: big, small: !big }">
-      <!-- <div class="right">
-        <span
+      <div class="right">
+        <!-- <span
           >《版权所有》COPYRIGHT©2023，www.inventionconvention.cn , All rights
           reserved.<br />版权所有 © 全球发明大会中国区 未经许可 严禁复制
           沪ICP备2022034759号-1</span
-        >
-      </div> -->
+        > -->
+      </div>
       <div class="left">
         <div class="img" v-if="big">
           <img src="./image/logo2.png" alt="" class="img1" />
@@ -49,35 +49,40 @@ export default {
 *{
   margin: 0;
   padding: 0;
-  cursor: pointer;
 }
 .footer {
-  height: 30vh;
-  background-color: #5a5a5a;
+  height: 25vh;
+  background-color: #484848;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  width: 100vw;
   .right {
+    width: 50%;
+      height: 100%;
     span {
       color: white;
       opacity: 0.5;
+      
     }
   }
   .left {
-    width: 80%;
+    width: 50%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-left: -10vw;
+    height: 100%;
+    overflow: hidden;
     .img {
       width: 100%;
+      height: 100%;
+      margin-bottom: 2vw;
       .img1 {
-        width: 30%;
+        width: 40%;
       }
       .img2 {
-        width: 14%;
-        margin-bottom: 60px;
-        margin-bottom: 5vw;
+        width: 20%;
+        margin-bottom: 3.5vw;
       }
     }
   }
@@ -88,13 +93,14 @@ export default {
   color: white;
   justify-content: space-between;
   width: 20vw;
-  height: 20vh;
+  height: auto;
   .ma1 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 8vw;
     text-align: center;
+    height: auto;
   }
   .ma2 {
     display: flex;
@@ -134,8 +140,11 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        width: 40vw;
+        width: 30vw;
         text-align: center;
+        div{
+          font-size: 1vw;
+        }
       }
       .ma2 {
         display: flex;
@@ -145,7 +154,7 @@ export default {
         justify-content: space-between;
       }
       div {
-        font-size: 2vh;
+        font-size: 1vh;
         color: #5a5a51;
         margin-top: 2vw;
       }

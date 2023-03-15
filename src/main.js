@@ -11,6 +11,8 @@ import Header from '@/components/Header';
 Vue.component(Header.name,Header);
 import Footer from '@/components/Footer';
 Vue.component(Footer.name,Footer);
+import Top from '@/components/Top'
+Vue.component(Top.name,Top);
 Vue.config.productionTip = false
 
 new Vue({
